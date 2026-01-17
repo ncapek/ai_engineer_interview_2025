@@ -12,9 +12,9 @@ class VectorStoreManager:
     def __init__(
         self,
         mongodb_uri: str,
-        db_name: str = 'doctalk',
-        collection_name: str = 'chunks',
-        vector_index_name: str = 'vector_index',
+        db_name: str = "doctalk",
+        collection_name: str = "chunks",
+        vector_index_name: str = "vector_index",
     ):
         """Initialize the vector store manager.
 
@@ -65,19 +65,19 @@ class VectorStoreManager:
         """
         pipeline = [
             {
-                '$vectorSearch': {
-                    'index': self.vector_index_name,
-                    'path': 'embedding',
-                    'queryVector': query_embedding,
-                    'numCandidates': num_candidates,
-                    'limit': limit,
+                "$vectorSearch": {
+                    "index": self.vector_index_name,
+                    "path": "embedding",
+                    "queryVector": query_embedding,
+                    "numCandidates": num_candidates,
+                    "limit": limit,
                 },
             },
             {
-                '$project': {
-                    '_id': 0,
-                    'text': 1,
-                    'score': {'$meta': 'vectorSearchScore'},
+                "$project": {
+                    "_id": 0,
+                    "text": 1,
+                    "score": {"$meta": "vectorSearchScore"},
                 },
             },
         ]
