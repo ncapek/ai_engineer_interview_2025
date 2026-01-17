@@ -1,3 +1,7 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "ai-engineer-interview-2025"
 version = "0.1.0"
@@ -15,6 +19,9 @@ dev = [
     "pytest>=9.0.2",
     "ruff>=0.14.13",
 ]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/doctalk"]
 
 [tool.ruff]
 line-length = 120
