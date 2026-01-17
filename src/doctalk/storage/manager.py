@@ -4,6 +4,8 @@ from pymongo import MongoClient
 from pymongo.collection import Collection
 from pymongo.database import Database
 
+from doctalk.models import Chunk
+
 
 class VectorStoreManager:
     """Manages MongoDB vector store operations for document chunks."""
@@ -39,15 +41,16 @@ class VectorStoreManager:
             self._collection = self._db[self.collection_name]
         return self._collection
 
-    def insert_chunks(self, chunks: list[dict[str, Any]]) -> None:
+    def insert_chunks(self, chunks: list[Chunk]) -> None:
         """Insert chunks with embeddings into the vector store.
 
-        :param chunks: List of chunk dictionaries with 'text' and 'embedding' keys
+        :param chunks: List of Chunk model instances
         """
         if not chunks:
             return
 
-        self.collection.insert_many(chunks)
+        chunk_dicts = [chunk.model_dump() for chunk in chunks]
+        self.collection.insert_many(chunk_dicts)
 
     def vector_search(
         self,
@@ -60,7 +63,7 @@ class VectorStoreManager:
         :param query_embedding: Query vector embedding
         :param limit: Maximum number of results to return
         :param num_candidates: Number of candidates to consider (higher = more accurate but slower)
-        :return: List of matching documents with text and score
+        :return: List of matching chunks with text, score, and metadata
         """
         pipeline = [
             {
@@ -74,8 +77,7 @@ class VectorStoreManager:
             },
             {
                 "$project": {
-                    "_id": 0,
-                    "text": 1,
+                    "embedding": 0,
                     "score": {"$meta": "vectorSearchScore"},
                 },
             },

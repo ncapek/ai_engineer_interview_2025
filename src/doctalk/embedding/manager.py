@@ -1,16 +1,17 @@
 from openai import OpenAI
 
+DEFAULT_MODEL = 'text-embedding-3-small'
 
 class EmbeddingManager:
     """Manages embedding generation for text."""
 
-    def __init__(self, model: str = 'text-embedding-3-small', api_key: str | None = None):
+    def __init__(self, model: str | None = None, api_key: str | None = None):
         """Initialize the embedding manager.
 
-        :param model: OpenAI embedding model name
+        :param model: OpenAI embedding model name (defaults to DEFAULT_MODEL)
         :param api_key: OpenAI API key (if None, uses OPENAI_API_KEY env var)
         """
-        self.model = model
+        self.model = model or DEFAULT_MODEL
         self.client = OpenAI(api_key=api_key)
 
     def embed(self, text: str) -> list[float]:
