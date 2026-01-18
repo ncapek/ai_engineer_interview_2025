@@ -21,6 +21,7 @@ Usage Examples:
     uv run python scripts/upload_documents.py file1.pdf sample_documents/ file2.docx
 """
 import argparse
+import logging
 import os
 from pathlib import Path
 
@@ -29,6 +30,11 @@ from dotenv import load_dotenv
 from doctalk.embedding import EmbeddingManager
 from doctalk.pipeline import IngestionPipeline
 from doctalk.storage import VectorStoreManager
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(levelname)s:%(name)s:%(message)s'
+)
 
 load_dotenv()
 

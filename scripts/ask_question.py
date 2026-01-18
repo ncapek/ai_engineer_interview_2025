@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Ask questions using the RAG agent."""
+import logging
 import os
 
 from dotenv import load_dotenv
@@ -7,6 +8,11 @@ from dotenv import load_dotenv
 from doctalk.agents import RAGAgent
 from doctalk.embedding import EmbeddingManager
 from doctalk.storage import VectorStoreManager
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(levelname)s:%(name)s:%(message)s'
+)
 
 load_dotenv()
 
