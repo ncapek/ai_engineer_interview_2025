@@ -1,4 +1,8 @@
+import logging
+
 from openai import OpenAI
+
+logger = logging.getLogger(__name__)
 
 DEFAULT_MODEL = 'text-embedding-3-small'
 
@@ -25,6 +29,11 @@ class EmbeddingManager:
             input=text,
         )
 
+        logger.info(
+            f'Embedding call: {response.usage.total_tokens} tokens '
+            f'(model: {self.model})'
+        )
+
         return response.data[0].embedding
 
     def embed_batch(self, texts: list[str]) -> list[list[float]]:
@@ -39,6 +48,11 @@ class EmbeddingManager:
         response = self.client.embeddings.create(
             model=self.model,
             input=texts,
+        )
+
+        logger.info(
+            f'Embedding batch call: {response.usage.total_tokens} tokens '
+            f'for {len(texts)} chunks (model: {self.model})'
         )
 
         return [item.embedding for item in response.data]
