@@ -12,7 +12,6 @@ load_dotenv()
 
 query = input('Enter your question: ')
 
-# Initialize components
 embedder = EmbeddingManager()
 vector_store = VectorStoreManager(
     mongodb_uri=os.environ['MONGODB_URI'],
@@ -20,20 +19,16 @@ vector_store = VectorStoreManager(
     collection_name='chunks',
 )
 
-# Create agent
 agent = RAGAgent(embedder, vector_store)
 
-# Ask question
 print(f'\nQuestion: {query}\n')
 print('Thinking...\n')
 
 answer = agent.ask(query)
 
-# Display answer
 print('Answer:')
 print(answer.text)
 
-# Only show citations if they exist
 if answer.citations:
     print('\n' + '=' * 60)
     print('Citations:')
