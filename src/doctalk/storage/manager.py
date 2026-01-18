@@ -77,6 +77,7 @@ class VectorStoreManager:
             },
             {
                 "$project": {
+                    "_id": 1,
                     "embedding": 0,
                     "score": {"$meta": "vectorSearchScore"},
                 },
