@@ -1,10 +1,6 @@
-# AI Engineer Interview 2025
+# DocTalk – Question Your Documents
 
-A basic document chatbot application built for the AI Engineer interview process.
-
-## Overview
-
-This project implements a basic document chatbot that allows users to interact with documents through natural language queries.
+DocTalk is a lightweight RAG (Retrieval-Augmented Generation) system that enables users to upload internal documents (PDF, DOCX, MD) and ask questions about their content. The system provides grounded answers with citations, ensuring users can verify the source of information.
 
 ## Development
 
